@@ -11,19 +11,31 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
+  //Do Not Change submitEvent function!
+  submitEvent(startDate, endDate, location, eventSelected) {
     $.ajax({
-      url: '/items', 
+      url: '/events',
+      type: 'POST', 
+      data: {
+          eventDateStart: startDate,
+          eventDateEnd: endDate,
+          eventLocation: location,
+          event: eventSelected        //Art or Concerts or Sports 
+            },
+
       success: (data) => {
+
         this.setState({
-          items: data
+          items: data                 //response data in array (coming from server)
         })
       },
       error: (err) => {
         console.log('err', err);
       }
     });
+
   }
+
 
   render () {
     return (<div>
