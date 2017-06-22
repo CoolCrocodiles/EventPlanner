@@ -13,6 +13,21 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 // app.use(express.static(__dirname + '/../angular-client'));
 // app.use(express.static(__dirname + '/../node_modules'));
 
+app.post('/events', function(req, res) {
+  var result = [];
+  var options = {
+      // url: `http://theastrologer-api.herokuapp.com/api/horoscope/${req.body.mySign}/yesterday`,
+      url: `http://api.eventful.com/json/events/search?app_key=HXWRVg4cwThzKRdQ&q=${req.body.eventSelected}&l=${req.body.eventLocation}='2017072500-2017072700'`,
+
+      method: 'GET'
+    }
+    request(options, function(err, response, body){
+      res.send(result);
+    }
+});
+
+
+
 app.get('/items', function (req, res) {
   items.selectAll(function(err, data) {
     if(err) {

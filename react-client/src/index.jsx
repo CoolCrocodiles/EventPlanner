@@ -12,21 +12,20 @@ class App extends React.Component {
   }
 
   //Do Not Change submitEvent function!
-  submitEvent(startDate, endDate, location, eventSelected) {
+  submitEvent(dateSelected, location, eventSelected) {
     $.ajax({
       url: '/events',
       type: 'POST', 
       data: {
-          eventDateStart: startDate,
-          eventDateEnd: endDate,
+          eventDate: dateSelected,
           eventLocation: location,
-          event: eventSelected        //Art or Concerts or Sports 
+          eventSelected: eventSelected        //Art or Concerts or Sports 
             },
 
       success: (data) => {
 
         this.setState({
-          items: data                 //response data in array (coming from server)
+          items: JSON.parse(data)                //response data in array (coming from server)
         })
       },
       error: (err) => {
@@ -34,8 +33,39 @@ class App extends React.Component {
       }
     });
 
+  };
+
+  saveEvent(userName, saveDate, saveSelections) {       //saveSelections is an ARRAY (saving in the DB)
+    $.ajax({
+      url: '/selected',
+      type: 'POST', 
+      data: {
+          saveDate: saveDate,                   //date entered
+          userName: userName,
+          saveSelections: saveSelections        //selected Events user interested and want to save in the DB
+            },
+      success: (data) => {
+        console.log(data);                       //Successfully saved in the DB
+
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
 
+  showSavedEvents() {       //retrieve list of events from DB
+    $.ajax({
+      url: '/retrieve',
+      type: 'GET', 
+      success: (data) => {
+
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
 
   render () {
     return (<div>
@@ -46,3 +76,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+
+
