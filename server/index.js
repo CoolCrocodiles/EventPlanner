@@ -18,7 +18,10 @@ app.post('/events', function(req, res) {
   var options = {
       // url: `http://theastrologer-api.herokuapp.com/api/horoscope/${req.body.mySign}/yesterday`,
       url: `http://api.eventful.com/json/events/search?app_key=HXWRVg4cwThzKRdQ&q=${req.body.eventSelected}&l=${req.body.eventLocation}='2017072500-2017072700'`,
-
+      
+      // !!!!!!!!!!! fixed DATE !!!!!!!!!!!!!!!!!
+      //http://api.eventful.com/json/events/search?app_key=HXWRVg4cwThzKRdQ&q=concerts&l=las+vegas&when=July+4
+      
       method: 'GET'
     }
     request(options, function(err, response, body){
